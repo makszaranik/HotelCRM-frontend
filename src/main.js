@@ -2,4 +2,4 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import './assets/registrationStyle.css';
 
-createApp(App).mount('#form');
+createApp(App).mount('#app');
