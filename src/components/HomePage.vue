@@ -10,15 +10,15 @@
     <body>
         <header>
             <div class="header-container">
-                <img src="logo.jpg" alt="Hotel Logo" class="logo">
+                <img src="logo.png" alt="Hotel Logo" class="logo">
                 <nav id="menu">
                     <ul class="menu">
                         <li id="current" class="active item1"><a href="https://example.com"><span>Main Page</span></a></li>
-                        <li class="item"><a href="autorization.html"><span>Autorization</span></a></li>
+                        <li class="item"><a href="autorization.html"><span>Authorization</span></a></li>
                         <li class="item"><a href="https://example.com/hotelslist"><span>Hotel Catalog</span></a></li>
                         <li class="item"><a href="FAQ.html"><span>FAQ</span></a></li>
                         <li class="item"><a href="https://example.com/contacts"><span>Our Contacts</span></a></li>
-                        <li class="item"><a href="regestration.html"><span>Registration</span></a></li>
+                        <li class="item"><a href="registration.html"><span>Registration</span></a></li>
   
                         <div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
                     </ul>
@@ -34,20 +34,36 @@
         <div class="content">
             <div class="slider">
                 <h2>Our Latest Offers</h2>
-                <p>Check out our latest hotel deals and promotions.</p>
+                <p>Explore the best deals and discounts on hotel bookings available now. Whether you're planning a relaxing getaway or a business trip, we have the perfect accommodation options for you.</p>
+                <p>Take advantage of our seasonal promotions and save on your next stay at one of our luxurious hotels. Don't miss out on limited-time offers that are tailored to your needs.</p>
+                <p>Check out our early bird offers for the upcoming holiday season. Plan your stay in advance and enjoy exclusive discounts on rooms and services.</p>
+                <p>For a memorable experience, explore our premium rooms, complete with world-class amenities and personalized service.</p>
+                <p>Our hotels offer top-notch dining, wellness services, and activities, ensuring a complete vacation experience. Book now and indulge in the luxury you deserve.</p>
+                <p>We strive to provide the best hospitality for every guest, with special packages designed for families, couples, and business travelers.</p>
             </div>
             <div class="news">
                 <h2>News</h2>
-                <p>Read the latest news about our hotel services and community events.</p>
+                <p>Our hotel chain has recently expanded, adding new locations in popular tourist destinations. Stay tuned for more updates on our new properties.</p>
+                <p>We're introducing a loyalty program that rewards frequent guests with exclusive perks and discounts. Sign up now and start earning points on every stay.</p>
+                <p>In response to the growing demand for sustainable travel, our hotels are implementing eco-friendly practices. We're committed to reducing our environmental footprint and promoting green tourism.</p>
+                <p>Our culinary team has launched a new seasonal menu at all locations, featuring locally sourced ingredients and innovative dishes. Join us for an unforgettable dining experience.</p>
+                <p>We are upgrading our guest rooms with the latest technology to enhance comfort and convenience. Expect new smart features, comfortable bedding, and more.</p>
+                <p>Exciting events are coming up at our hotels, including live performances, themed parties, and special promotions. Check out our event calendar for the latest happenings.</p>
             </div>
             <div class="about">
                 <h2>About the Project</h2>
-                <p>This CRM system is designed to streamline hotel booking and customer management.</p>
+                <p>This CRM system is designed to streamline hotel booking and customer management. It integrates multiple functionalities to manage reservations, customer preferences, and services efficiently.</p>
+                <p>Our system allows hotel staff to track bookings in real-time, manage guest information, and offer personalized services based on individual preferences.</p>
+                <p>Through this platform, customers can easily book rooms, check availability, and access a range of services from the comfort of their home or on the go.</p>
+                <p>We are continuously improving the system with new features and updates to enhance the user experience and ensure seamless interaction between guests and hotel staff.</p>
+                <p>The goal of this CRM is to create an all-in-one solution for hotel operations, ensuring that both guests and staff enjoy a smooth and efficient experience.</p>
             </div>
         </div>
         <div class="right">
             <h2>About</h2>
-            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
+            <p>Our hotel chain is committed to offering high-quality service, luxurious accommodations, and a welcoming atmosphere. Whether you're here for business or leisure, we ensure your stay is unforgettable.</p>
+            <p>With a wide variety of properties in prime locations, our hotels are perfect for travelers seeking comfort, convenience, and top-tier amenities.</p>
+            <p>We prioritize sustainability, customer satisfaction, and innovation in all our operations. Join us in experiencing the best in hospitality.</p>
         </div>
         <footer>
             <div class="container">
@@ -64,6 +80,7 @@
     </body>
     </html>
 </template>
+
 <style scoped>
 * {
     margin: 0;
