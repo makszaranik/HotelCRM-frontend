@@ -54,4 +54,73 @@ button {
   margin-top: 10px;
   margin-right: 10px;
 }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h2 {
+    text-align: center;
+    margin: 30px;
+}
+
+
+body{
+    display: grid;
+    grid-template-areas: 
+    "form"
+    "footer";
+    min-height: 100vh;
+}
+
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 3px;
+}
+
+button:hover {
+    background-color: #45a049;
+    cursor: pointer;
+}
+
+
+@media (max-width: 768px){
+    h2{
+        margin: 5vh 5vw;
+        text-align: center;
+    }
+    input, select{
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 25px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        box-sizing: border-box;
+    }
+    button {
+        width: 100%;
+        padding: 10px;
+        background-color: #559457;
+        color: white;
+        border: none;
+        border-radius: 3px;
+    }
+}
 </style>
