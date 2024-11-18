@@ -3,6 +3,7 @@
     <RouterLink to="/home">Home</RouterLink>
     <RouterLink to="/register">Register</RouterLink>
     <RouterLink to="/entries">Entries</RouterLink>
+    <RouterLink to="/authorization">Authorization</RouterLink>
     <RouterView></RouterView>
   </div>
 </template>
@@ -37,5 +38,5 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 </style>

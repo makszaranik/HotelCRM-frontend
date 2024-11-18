@@ -1,6 +1,6 @@
 <template>
 <div id="form">
-  <form @submit.prevent="handleSubmit">
+  <form @submit.prevent="submitForm">
     <h2>Registration</h2>
 
     <label for="email">Email</label>
@@ -90,6 +90,38 @@ export default {
       };
     },
     methods: {
+      async submitForm(){
+        this.handleSubmit()
+        const res = await fetch('http://localhost:8000/api/users/registration', {
+            method: 'POST',
+            headers: {
+                'Content-type' : 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+                email: this.form.email,
+                password: this.form.password
+            })
+        })
+        console.log(res)
+        this.resetForm();
+      },
+      handleSubmit() {
+        this.validateEmail();
+        this.validatePassword();
+        this.validateSurname();
+        this.validateName();
+        this.validateSecondname();
+        this.validateBirthdaydata();
+        this.validatePhone();
+        this.validateGroup();
+        this.validateSex();
+        this.validateFileUpload({ target: this.$refs.fileUpload });
+
+        if (Object.values(this.form.errors).every(error => error === '')) {
+            alert('Form submitted successfully!');
+        }
+    },
       handlePhoneInput(){
           this.phoneInputListener()
           this.validatePhone()
@@ -240,34 +272,7 @@ export default {
               sex: '',
               fileUpload: ''
           }
-      },
-        handleSubmit() {
-            this.validateEmail();
-            this.validatePassword();
-            this.validateSurname();
-            this.validateName();
-            this.validateSecondname();
-            this.validateBirthdaydata();
-            this.validatePhone();
-            this.validateGroup();
-            this.validateSex();
-            this.validateFileUpload({ target: this.$refs.fileUpload });
-
-            if (Object.values(this.form.errors).every(error => error === '')) {
-                alert('Form submitted successfully!');
-                const entry = {
-                    email: this.form.email,
-                    name: this.form.name,
-                    surname: this.form.surname,
-                    phone: this.form.phone,
-                    group: this.form.group,
-                    sex: this.form.sex,
-                    selected: false,
-                };
-                this.$emit('add-entry', entry);
-                this.resetForm();
-            }
-        }
+      }
     }
 };
 </script>

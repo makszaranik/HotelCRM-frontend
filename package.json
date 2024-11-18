@@ -5,12 +5,16 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "start": "node server.js",
+    "backend": "nodemon server.js"
   },
   "dependencies": {
     "core-js": "^3.8.3",
+    "express": "^4.21.1",
     "my-app-vue": "file:",
-    "vue": "^3.2.13"
+    "vue": "^3.2.13",
+    "vue-router": "^4.4.5"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
@@ -19,7 +23,8 @@
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "eslint": "^7.32.0",
-    "eslint-plugin-vue": "^8.0.3"
+    "eslint-plugin-vue": "^8.0.3",
+    "nodemon": "^3.1.7"
   },
   "eslintConfig": {
     "root": true,
@@ -40,5 +45,18 @@
     "last 2 versions",
     "not dead",
     "not ie 11"
-  ]
+  ],
+  "description": "## Project setup ``` npm install ```",
+  "main": "babel.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/makszaranik/lab-7-web.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/makszaranik/lab-7-web/issues"
+  },
+  "homepage": "https://github.com/makszaranik/lab-7-web#readme"
 }
