@@ -14,9 +14,11 @@
         <button type="submit">submit</button>
     </form>
   </div>
+  <LogoutButton />
 </template>
 
 <script>
+  import LogoutButton from '@/components/LogoutButton.vue';
   export default {
     data(){
       return{
@@ -29,6 +31,9 @@
           }
         },
       }
+    },
+    components: {
+      LogoutButton
     },
     methods: {
       async submitForm(){
@@ -44,12 +49,10 @@
               password: this.form.password
           })
         })
-
         if(res.status === 200){
-          this.$router.push("/register")
+          this.$router.push("/home")
         }
-
-        console.log(res);
+        sessionStorage.setItem("authorization", true)
         this.resetForm()
       },
       handleSubmit(){

@@ -56,9 +56,11 @@
     <button type="submit">Register</button>
   </form>
 </div>
+<LogoutButton />
 </template>
 
 <script>
+import LogoutButton from '@/components/LogoutButton.vue';
 export default {
     data() {
       return {
@@ -88,6 +90,9 @@ export default {
           }
         }
       };
+    },
+    components: {
+      LogoutButton
     },
     methods: {
       async submitForm(){
