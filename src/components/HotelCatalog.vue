@@ -1,12 +1,12 @@
 <template>
   <div>
     <div class="search-container">
-      <input type="text" id="city" placeholder="Enter the city name">
-      <label for="start-date">start date</label>
-      <input type="date" id="start-date">
-      <label for="end-date">end date</label>
-      <input type="date" id="end-date">
-      <button>Find</button>
+      <input v-model="city" type="text" id="city" placeholder="Enter the city name">
+      <label for="start-date">arrival date</label>
+      <input v-model="startDate" type="date" id="start-date">
+      <label for="end-date">departure date</label>
+      <input v-model="endDate" type="date" id="end-date">
+      <button @click="searchHotel">Find</button>
     </div>
 
     <div class="hotel-grid">
@@ -15,8 +15,7 @@
         <div class="hotel-info">
           <h3>{{ hotel.name }}</h3>
           <p>{{ hotel.city }}</p>
-          <p>Время: {{ hotel.startDate }} - {{ hotel.endDate }}</p>
-          <p class="price">{{ hotel.price }} usd per night</p>
+          <p class="price">{{ hotel.price }}$ per night</p>
           <button @click="bookHotel(index)">Book Hotel</button>
         </div>
       </div>
@@ -30,19 +29,63 @@ import LogoutButton from '@/components/LogoutButton.vue';
 export default {
   data() {
     return {
-      hotels: [
-        { name: "Lavra Hotel", city: "Kyiv", startDate: "01.12.2024", endDate: "07.12.2024", price: "12", image: "https://via.placeholder.com/300x200" },
-        { name: "Carpathian Hotel", city: "Lviv", startDate: "10.12.2024", endDate: "15.12.2024", price: "15", image: "https://via.placeholder.com/300x200" },
-        { name: "Chernivtsi Hotel", city: "Chernivtsi", startDate: "05.01.2025", endDate: "10.01.2025", price: "10", image: "https://via.placeholder.com/300x200" }
-      ]
+      city: '',
+      startDate: '',
+      endDate: '',
+      hotels: [],
+      selectedHotelId: null
     };
+  },
+  mounted() {
+    this.allHotels();
   },
   components: {
     LogoutButton
   },
   methods: {
     bookHotel(index) {
-      alert(`Hotel booked: ${this.hotels[index].name}`);
+      this.selectedHotelId = this.hotels[index].id
+      this.$router.push({path: "/catalog/rooms", query: {
+        selectedHotelId: this.selectedHotelId,
+        startDate: this.startDate,
+        endDate: this.endDate
+      }})
+    },
+    async allHotels(){
+      const res = await fetch('http://localhost:8000/api/hotels/all',{
+        method: "GET",
+        headers: {
+          'Content-type' : 'application/json'
+        },
+      });
+      if(res.status === 200){
+        const data = await res.json()
+        this.hotels = data
+      }
+    },    
+    async searchHotel(){
+      this.hotels = []
+      const startParts = this.startDate.split('-');
+      const formattedStartDate = `${startParts[1]}.${startParts[2]}.${startParts[0]}`;
+      const endParts = this.endDate.split('-');
+      const formattedEndDate = `${endParts[1]}.${endParts[2]}.${endParts[0]}`;
+
+      console.log(this.hotels)
+      const res = await fetch('http://localhost:8000/api/hotels/search', {
+        method: "POST",
+        headers: {
+          'Content-type' : 'application/json'
+        },
+        body: JSON.stringify({
+          city: this.city,
+          startDate: formattedStartDate,
+          endDate: formattedEndDate
+        }),
+      });
+      if(res.status === 200){
+        const data = await res.json()
+        this.hotels = data;
+      }
     }
   }
 };
@@ -92,6 +135,26 @@ h2 {
 
 .search-container button:hover {
   background-color: #0056b3;
+}
+
+.select-btn-container {
+  display: flex;
+  justify-content: flex-end;
+  flex-grow: 1;
+}
+
+.select-btn-container button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  width: 120px;
+  cursor: pointer;
+  padding: 8px 15px;
+}
+
+.select-btn-container button:hover {
+  background-color: #45a049;
 }
 
 .hotel-grid {
