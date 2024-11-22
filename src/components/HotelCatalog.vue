@@ -6,7 +6,8 @@
       <input v-model="startDate" type="date" id="start-date">
       <label for="end-date">departure date</label>
       <input v-model="endDate" type="date" id="end-date">
-      <button @click="searchHotel">Find</button>
+      <button v-show="isValidForm()" @click="searchHotel">Find</button>
+      <button v-show="!isValidForm()">Find</button>
     </div>
 
     <div class="hotel-grid">
@@ -15,7 +16,7 @@
         <div class="hotel-info">
           <h3>{{ hotel.name }}</h3>
           <p>{{ hotel.city }}</p>
-          <p class="price">{{ hotel.price }}$ per night</p>
+          <p class="price">average price {{ averagePrice(hotel) }}$ per night</p>
           <button @click="bookHotel(index)">Book Hotel</button>
         </div>
       </div>
@@ -33,7 +34,7 @@ export default {
       startDate: '',
       endDate: '',
       hotels: [],
-      selectedHotelId: null
+      selectedHotelId: null,
     };
   },
   mounted() {
@@ -43,6 +44,18 @@ export default {
     LogoutButton
   },
   methods: {
+    averagePrice(hotel){
+      let average = 0
+      let sum = 0
+      hotel.rooms.forEach(element => {
+        sum += element.price
+      });
+      average = (sum/(hotel.rooms.length))
+      return average
+    },
+    isValidForm(){
+      return (this.startDate !== "" && this.endDate !== "");
+    },
     bookHotel(index) {
       this.selectedHotelId = this.hotels[index].id
       this.$router.push({path: "/catalog/rooms", query: {
@@ -69,8 +82,11 @@ export default {
       const formattedStartDate = `${startParts[1]}.${startParts[2]}.${startParts[0]}`;
       const endParts = this.endDate.split('-');
       const formattedEndDate = `${endParts[1]}.${endParts[2]}.${endParts[0]}`;
-
       console.log(this.hotels)
+      if(this.city == ''){
+        this.allHotels()
+        return
+      }
       const res = await fetch('http://localhost:8000/api/hotels/search', {
         method: "POST",
         headers: {
@@ -133,7 +149,24 @@ h2 {
   cursor: pointer;
 }
 
+.search-container-invalidForm button{
+  padding: 10px 15px;
+  background-color: #75b5f9;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.search-container-invalidForm button:hover{
+  background-color: #75b5f9;
+}
+
 .search-container button:hover {
+  background-color: #0056b3;
+}
+.search-container button:active {
+  transform: scale(0.95);
   background-color: #0056b3;
 }
 

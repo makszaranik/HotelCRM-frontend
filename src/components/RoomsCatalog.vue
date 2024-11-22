@@ -8,11 +8,11 @@
       </div>
       <p class="wifi">📶 Free Wi-Fi</p>
       <p class="prepayment" :class="{ green: !prepaymentNeeded }">
-        {{ prepaymentNeeded ? "Передоплата потрібна" : "Передоплата не потрібна" }}
+        {{ prepaymentNeeded ? "Advance payment required" : "No advance payment required" }}
       </p>
-      <p class="cancellation">ℹ️ Безкоштовне скасування бронювання</p>
+      <p class="cancellation">ℹ️ Free cancellation of reservation</p>
       <div class="room-price">
-        <strong>{{ room.price}} грн</strong> <span>за 27 ночей (за місце)</span>
+        <strong>{{ room.price * duration}} $ </strong> <span>for {{duration}} nights </span>
       </div>
       <button class="book-button">Забронювати</button>
     </div>
@@ -25,6 +25,7 @@ import LogoutButton from '@/components/LogoutButton.vue';
 export default {
   data(){
     return {
+      duration: 0,
       selectedHotelId: null,
       startDate: '',
       endDate: '',
@@ -32,18 +33,18 @@ export default {
     }
   },
   methods: {
-    getDataFromQuery(){
-      this.selectedHotelId = this.$route.query.selectedHotelId
-      this.startDate = this.$route.query.startDate
-      this.endDate = this.$route.query.endDate
-      
+    getDataFromQuery() {
+      this.selectedHotelId = this.$route.query.selectedHotelId;
+      this.startDate = this.$route.query.startDate;
+      this.endDate = this.$route.query.endDate;
+
       const startParts = this.startDate.split('-');
       const formattedStartDate = `${startParts[1]}.${startParts[2]}.${startParts[0]}`;
       const endParts = this.endDate.split('-');
       const formattedEndDate = `${endParts[1]}.${endParts[2]}.${endParts[0]}`;
 
-      this.startDate = formattedStartDate
-      this.endDate = formattedEndDate
+      this.startDate = formattedStartDate;
+      this.endDate = formattedEndDate;
     },
     async getRooms(){
       const res = await fetch(`http://localhost:8000/api/hotels/${this.selectedHotelId}/rooms`, {
