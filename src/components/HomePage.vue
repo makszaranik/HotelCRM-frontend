@@ -10,7 +10,7 @@
     <body>
         <header>
             <div class="header-container">
-                <img src="logo.png" alt="Hotel Logo" class="logo">
+                <img src="https://gohotels.com.ua/templates/gohotels/images/header_en.png" alt="Hotel Logo" class="logo">
                 <nav id="menu">
                     <ul class="menu">
                         <li id="current" class="active item1"><a href="https://example.com"><span>Main Page</span></a></li>

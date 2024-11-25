@@ -12,9 +12,9 @@
       </p>
       <p class="cancellation">ℹ️ Free cancellation of reservation</p>
       <div class="room-price">
-        <strong>{{ room.price * duration}} $ </strong> <span>for {{duration}} nights </span>
+        <strong>{{ room.price * duration }} $ </strong> <span>for {{duration}} nights </span>
       </div>
-      <button class="book-button">Забронювати</button>
+      <button class="book-button">Book room</button>
     </div>
   </div>
   <LogoutButton />
@@ -37,7 +37,7 @@ export default {
       this.selectedHotelId = this.$route.query.selectedHotelId;
       this.startDate = this.$route.query.startDate;
       this.endDate = this.$route.query.endDate;
-
+      
       const startParts = this.startDate.split('-');
       const formattedStartDate = `${startParts[1]}.${startParts[2]}.${startParts[0]}`;
       const endParts = this.endDate.split('-');
@@ -45,6 +45,19 @@ export default {
 
       this.startDate = formattedStartDate;
       this.endDate = formattedEndDate;
+
+      console.log(this.startDate)
+      console.log(this.endDate)
+      
+    },
+    calculateDuration(){
+      const [startDay, startMonth, startYear] = this.startDate.split('.');
+      const [endDay, endMonth, endYear] = this.endDate.split('.');
+      const startDate = new Date(`${startYear}-${startMonth}-${startDay}`);
+      const endDate = new Date(`${endYear}-${endMonth}-${endDay}`);
+      const timeDiff = endDate - startDate;
+      const days = Math.ceil(timeDiff / (1000 * 3600 * 24));
+      this.duration = days > 0 ? days : 0;
     },
     async getRooms(){
       const res = await fetch(`http://localhost:8000/api/hotels/${this.selectedHotelId}/rooms`, {
@@ -68,6 +81,7 @@ export default {
     if(this.getDataFromQuery){
       this.getRooms()
     }
+    this.calculateDuration()
   },
   components: {
     LogoutButton
