@@ -11,9 +11,8 @@
     <input @input="validatePassword" v-model="form.password" type="password" name="password" required>
     <span class="error-message">{{ form.errors.password }}</span>
 
-    <label for="surname">Surname</label>
-    <input @input="validateSurname" v-model="form.surname" type="text" name="surname" required>
-    <span class="error-message">{{ form.errors.surname }}</span>
+    <label for="username">Username</label>
+    <input v-model="form.username" type="text" name="username" required>
 
     <label for="name">Name</label>
     <input @input="validateName" v-model="form.name" type="text" name="name" required>
@@ -27,7 +26,7 @@
     <input @input="validateBirthdaydata" v-model="form.birthdaydata" type="text" name="birthdaydata" required>
     <span class="error-message">{{ form.errors.birthdaydata }}</span>
 
-    <label for="phone">Телефон *</label>
+    <label for="phone">Telephone *</label>
     <input @input="handlePhoneInput" @focus="phoneFocusListener" @blur="phoneBlurListener" v-model="form.phone" type="tel" name="phone" placeholder="+38(0XX) XXX-XX-XX" required>
     <span class="error-message">{{ form.errors.phone }}</span>
 
@@ -67,7 +66,7 @@ export default {
         form: {
           email: '',
           password: '',
-          surname: '',
+          username: '',
           name: '',
           secondname: '',
           birthdaydata: '',
@@ -79,7 +78,6 @@ export default {
           errors: {
             email: '',
             password: '',
-            surname: '',
             name: '',
             secondname: '',
             birthdaydata: '',
@@ -104,6 +102,7 @@ export default {
             },
             credentials: 'include',
             body: JSON.stringify({
+                username: this.form.username,
                 email: this.form.email,
                 password: this.form.password
             })
@@ -178,16 +177,6 @@ export default {
               this.form.errors.password = 'Password is required.';
           } else {
               this.form.errors.password = '';
-          }
-      },
-      validateSurname() {
-          const surnameRegex = /^[A-Za-zА-Яа-яЁё]+$/;
-          if (!this.form.surname) {
-              this.form.errors.surname = 'Surname is required.';
-          } else if (!surnameRegex.test(this.form.surname)) {
-              this.form.errors.surname = 'Invalid surname format.';
-          } else {
-              this.form.errors.surname = '';
           }
       },
       validateName() {
@@ -350,17 +339,26 @@ input, select {
 
 button {
     width: 100%;
-    padding: 10px;
-    background-color: #4CAF50;
+    padding: 10px 15px;
+    background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 3px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.5s;
+    background-image: linear-gradient(to right, #1A2980 0%, #26D0CE 51%, #1A2980 100%);
+    background-size: 200% auto;
+    box-shadow: 0 0 20px #eee;
+    display: inline-block;
 }
 
 button:hover {
-    background-color: #45a049;
-    cursor: pointer;
+    background-position: right center;
+    color: white;
+    text-decoration: none;
 }
+
 
 footer {
     grid-area: footer;

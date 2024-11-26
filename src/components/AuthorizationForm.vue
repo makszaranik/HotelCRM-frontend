@@ -3,9 +3,9 @@
     <form @submit.prevent=submitForm>
         <h2>Enter in account</h2>
 
-        <label for="email"> Email </label>
-        <input @input="validateEmail" v-model="form.email" type="text" name="email" required>
-        <span class="error-message"> {{ form.errors.email}} </span>
+        <label for="username">Username</label>
+        <input @input="validateUsername" v-model="form.username" type="text" name="username" required>
+        <span class="error-message"> {{ form.errors.username }} </span>
 
         <label for="password"> Password </label>
         <input @input="validatePassword" v-model="form.password" type="password" name="password" required>
@@ -23,10 +23,10 @@
     data(){
       return{
         form: {
-          email: '',
+          username: '',
           password: '',
           errors: {
-            email: '',
+            username: '',
             password: ''
           }
         },
@@ -38,44 +38,42 @@
     methods: {
       async submitForm(){
         this.handleSubmit()
-        const res = await fetch('http://localhost:8000/api/users/authorization',{
+        const res = await fetch('http://localhost:8000/api/users/login',{
           method : "POST",
           headers: {
             'Content-type' : 'application/json'
           },
           credentials: 'include',
           body: JSON.stringify({
-              email: this.form.email,
+              username: this.form.username,
               password: this.form.password
           })
         })
         if(res.status === 200){
-          this.$router.push("/home")
+          const data = await res.json()
+          sessionStorage.setItem("authToken", data)
+          this.$router.push("/catalog")
+          return;
         }
-        sessionStorage.setItem("authorization", true)
         this.resetForm()
       },
       handleSubmit(){
-        this.validateEmail();
+        this.validateUsername();
         this.validatePassword();
       },
       resetForm() {
-        this.form.email = ''
         this.form.password = ''
         this.form.errors = {
-          email: '',
+          username: '',
           password:  ''
         }
       },
-      validateEmail() {
-          const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-          if (!this.form.email) {
-              this.form.errors.email = 'Email is required.';
-          } else if (!emailRegex.test(this.form.email)) {
-              this.form.errors.email = 'Invalid email format.';
-          } else {
-              this.form.errors.email = '';
-          }
+      validateUsername() {
+        if(!this.form.username){
+          this.form.errors.username = 'Username is required.';
+        }else{
+          this.form.errors.username = '';
+        }
       },
       validatePassword() {
         if(!this.form.password){
@@ -136,18 +134,25 @@ input {
 
 button {
     width: 100%;
-    padding: 10px;
-    background-color: #4CAF50;
+    padding: 10px 15px;
+    background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 3px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.5s;
+    background-image: linear-gradient(to right, #1A2980 0%, #26D0CE 51%, #1A2980 100%);
+    background-size: 200% auto;
+    box-shadow: 0 0 20px #eee;
+    display: inline-block;
 }
 
 button:hover {
-    background-color: #45a049;
-    cursor: pointer;
+    background-position: right center;
+    color: white;
+    text-decoration: none;
 }
-
 
 footer {
     margin-top: 100px;
@@ -200,16 +205,6 @@ footer {
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         margin-bottom: 40%;
         margin-top: 100px;
-        text-align: center;
-    }
-    
-    .footer-icons {
-        display: flex;
-        justify-content: center;
-        gap: 30px;
-        margin-bottom: 10px;
-    }
-    .footer a{
         text-align: center;
     }
 }

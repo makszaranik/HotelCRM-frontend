@@ -65,7 +65,7 @@ export default {
       }})
     },
     async allHotels(){
-      const res = await fetch('http://localhost:8000/api/hotels/all',{
+      const res = await fetch('http://localhost:8000/api/hotels',{
         method: "GET",
         headers: {
           'Content-type' : 'application/json'
@@ -147,15 +147,32 @@ h2 {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  width: 100px;
+  height: 38px;
+  border: none;
+  text-transform: uppercase;
+  transition: 0.3s;
+  background-image: linear-gradient(to right, #1A2980 0%, #26D0CE  51%, #1A2980  100%);
+  background-size: 200% auto;
+  box-shadow: 0 0 20px #eee;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+.search-container button:hover {
+  background-position: right center;
+  color: white;
+  text-decoration: none;
 }
 
 .search-container-invalidForm button{
   padding: 10px 15px;
-  background-color: #75b5f9;
+  background-color: #374383;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  width: 100px;
 }
 
 .search-container-invalidForm button:hover{
@@ -163,11 +180,11 @@ h2 {
 }
 
 .search-container button:hover {
-  background-color: #0056b3;
+  background-color: #1A2980;
 }
 .search-container button:active {
   transform: scale(0.95);
-  background-color: #0056b3;
+  background-color: #27347e;
 }
 
 .select-btn-container {
@@ -226,23 +243,33 @@ h2 {
 
 .hotel-info .price {
   font-size: 1.1em;
-  color: #28a745;
+  color: #1A2980;
   font-weight: bold;
 }
 
 .hotel-info button {
   width: 100%;
   padding: 10px;
-  background-color: #4CAF50;
   color: white;
   border: none;
-  border-radius: 3px;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-image: linear-gradient(to right, #1A2980 0%, #26D0CE  51%, #1A2980  100%);
+  background-size: 200% auto;
+  box-shadow: 0 0 20px #eee;
+  border-radius: 10px;
+  display: inline-block;
+  border: none;
   cursor: pointer;
 }
 
 .hotel-info button:hover {
-  background-color: #45a049;
+  background-position: right center;
+  color: white;
+  text-decoration: none;
 }
+
+
 
 @media (max-width: 768px) {
   h2 {

@@ -7,14 +7,12 @@
         <p><span>🛏️</span> {{ room.bedsCount }} beds</p>
       </div>
       <p class="wifi">📶 Free Wi-Fi</p>
-      <p class="prepayment" :class="{ green: !prepaymentNeeded }">
-        {{ prepaymentNeeded ? "Advance payment required" : "No advance payment required" }}
-      </p>
       <p class="cancellation">ℹ️ Free cancellation of reservation</p>
       <div class="room-price">
         <strong>{{ room.price * duration }} $ </strong> <span>for {{duration}} nights </span>
       </div>
-      <button class="book-button">Book room</button>
+      <button v-if="roomAvailable(room)" @click="bookRoom(room.id)" class="book-button">Book room</button>
+      <p class="booked-room-text" v-if="room.status === 'booked'">Room already booked</p>
     </div>
   </div>
   <LogoutButton />
@@ -33,6 +31,12 @@ export default {
     }
   },
   methods: {
+    isLoggedIn() {
+      return sessionStorage.getItem("authToken") !== null;
+    },
+    roomAvailable(room){
+      return room.status === 'available'
+    },
     getDataFromQuery() {
       this.selectedHotelId = this.$route.query.selectedHotelId;
       this.startDate = this.$route.query.startDate;
@@ -63,7 +67,8 @@ export default {
       const res = await fetch(`http://localhost:8000/api/hotels/${this.selectedHotelId}/rooms`, {
         method: "POST",
         headers: {
-          'Content-type' : 'application/json'
+          'Content-type' : 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem("authToken")}`
         },
         body: JSON.stringify({
           startDate: this.startDate,
@@ -73,6 +78,26 @@ export default {
       if(res.ok){
         const rooms = await res.json()
         this.rooms = rooms
+      }
+    },
+    async bookRoom(roomId){
+      if(!this.isLoggedIn()){
+        alert("You are not logged in, please login before")
+        return;
+      }
+      if(!confirm("Are you sure you want to book this room?")) return;
+      const res = await fetch(`http://localhost:8000/api/hotels/${this.selectedHotelId}/rooms/${roomId}/book`, {
+        method: "PATCH",
+        headers: {
+          'Content-type' : 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem("authToken")}`
+        },
+      })
+      if(res.ok){
+        const room = this.rooms.find((room) => room.id === roomId)
+        if(room){
+          room.status = "booked"
+        }
       }
     }
   },
@@ -100,9 +125,9 @@ export default {
   width: 65%;
 }
 .room-card img{
-  margin-top: 100px;
+  margin-top: 60px;
   width: 200px;
-  height: 150px;
+  height: 200px;
   object-fit: cover;
 }
 
@@ -123,18 +148,8 @@ export default {
 .wifi {
   margin-top: 10px;
   font-size: 14px;
-  color: #007bff;
+  color: #1A2980;
 }
-
-.prepayment {
-  margin-top: 5px;
-  font-size: 14px;
-}
-
-.prepayment.green {
-  color: green;
-}
-
 
 .room-price {
   margin-top: 15px;
@@ -153,14 +168,27 @@ export default {
   margin-top: 15px;
   margin-right: 60px;
   padding: 10px;
-  background-color: #28a745;
   color: white;
   border: none;
-  border-radius: 5px;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-image: linear-gradient(to right, #1A2980 0%, #26D0CE  51%, #1A2980  100%);
+  background-size: 200% auto;
+  box-shadow: 0 0 20px #eee;
+  border-radius: 10px;
+  display: inline-block;
+  border: none;
   cursor: pointer;
 }
 
 .book-button:hover {
-  background-color: #218838;
+  background-position: right center;
+  color: white;
+  text-decoration: none;
+}
+
+.booked-room-text{
+  font-size: 18;
+  color: #dc4e4e;
 }
 </style>
