@@ -1,25 +1,33 @@
 <template>
-    <div class="room-card" v-for="(room, index) in rooms" :key="index" >
-    <img src="https://img.hotels24.ua/photos/partner_hotel/room/123/12354/1235499/Gostinica-Nesvit-nomer-Mesto-v-jenskom-8-mestnom-nomere-foto-1235499mx.jpg"  alt="Room" class="room-image">
+  <div class="room-card" v-for="(room, index) in rooms" :key="index">
+    <img src="https://img.hotels24.ua/photos/partner_hotel/room/123/12354/1235499/Gostinica-Nesvit-nomer-Mesto-v-jenskom-8-mestnom-nomere-foto-1235499mx.jpg" 
+         alt="Room" class="room-image">
     <div class="room-info">
-      <h3>{{ title }}</h3>
+      <div class="room-header">
+        <h3 class="room-title">{{ title }}</h3>
+      </div>
       <div class="room-details">
         <p><span>🛏️</span> {{ room.bedsCount }} beds</p>
-      </div>
-      <p class="wifi">📶 Free Wi-Fi</p>
-      <p class="cancellation">ℹ️ Free cancellation of reservation</p>
-      <div class="room-price">
-        <strong>{{ room.price * duration }} $ </strong> <span>for {{duration}} nights </span>
+        <p class="cancellation">ℹ️ Free cancellation</p>
+        <strong>{{ room.price * duration }}$ </strong>
+        <span>for {{ duration }} nights</span>
+        <div class="stars">
+          <span>★</span>
+          <span>★</span>
+          <span>★</span>
+        </div>
       </div>
       <button v-if="roomAvailable(room)" @click="bookRoom(room.id)" class="book-button">Book room</button>
       <p class="booked-room-text" v-if="room.status === 'booked'">Room already booked</p>
     </div>
   </div>
-  <LogoutButton />
+  <HeaderComponent />
 </template>
 
+
 <script>
-import LogoutButton from '@/components/LogoutButton.vue';
+import HeaderComponent from './HeaderComponent.vue';
+
 export default {
   data(){
     return {
@@ -29,6 +37,9 @@ export default {
       endDate: '',
       rooms: [],
     }
+  },
+  components: {
+    HeaderComponent
   },
   methods: {
     isLoggedIn() {
@@ -108,9 +119,6 @@ export default {
     }
     this.calculateDuration()
   },
-  components: {
-    LogoutButton
-  }
 }
 </script>
 
@@ -122,14 +130,28 @@ export default {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   margin-bottom: 20px;
-  width: 65%;
+  height: 300px;
 }
 .room-card img{
-  margin-top: 60px;
+  margin-top: 30px;
+  padding-left: 5px;
   width: 200px;
-  height: 200px;
+  height: 230px;
+  border-radius: 8px;
   object-fit: cover;
+  margin-bottom: 30px;
 }
+
+.room-details.stars {
+  display: inline-flex;
+  gap: 5px; 
+}
+
+.stars span {
+  font-size: 24px;
+  color: #FF6347;
+}
+
 
 .room-info {
   padding: 15px;
@@ -140,19 +162,14 @@ export default {
 }
 
 .room-details p {
-  margin: 5px 0;
-  font-size: 14px;
+  margin: 30px 0;
+  margin-top: 30px;
+  font-size: 16px;
   color: #333;
 }
 
-.wifi {
-  margin-top: 10px;
-  font-size: 14px;
-  color: #1A2980;
-}
-
 .room-price {
-  margin-top: 15px;
+  margin-top: 30px;
   font-size: 18px;
   font-weight: bold;
   color: #000;
@@ -165,7 +182,7 @@ export default {
 
 .book-button {
   width: 30vh;
-  margin-top: 15px;
+  margin-bottom: 25px;
   margin-right: 60px;
   padding: 10px;
   color: white;

@@ -14,11 +14,11 @@
         <button type="submit">submit</button>
     </form>
   </div>
-  <LogoutButton />
+  <HeaderComponent />
 </template>
 
 <script>
-  import LogoutButton from '@/components/LogoutButton.vue';
+import HeaderComponent from './HeaderComponent.vue';
   export default {
     data(){
       return{
@@ -33,7 +33,7 @@
       }
     },
     components: {
-      LogoutButton
+      HeaderComponent
     },
     methods: {
       async submitForm(){

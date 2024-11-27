@@ -23,16 +23,18 @@
     </div>
   </div>
   <LogoutButton />
+  <HeaderComponent />
 </template>
 
 <script>
 import LogoutButton from '@/components/LogoutButton.vue';
+import HeaderComponent from './HeaderComponent.vue';
 export default {
   data() {
     return {
       city: '',
-      startDate: '',
-      endDate: '',
+      startDate: "2024-05-12",
+      endDate: "2024-07-12",
       hotels: [],
       selectedHotelId: null,
     };
@@ -41,7 +43,8 @@ export default {
     this.allHotels();
   },
   components: {
-    LogoutButton
+    LogoutButton,
+    HeaderComponent
   },
   methods: {
     averagePrice(hotel){
@@ -201,10 +204,6 @@ h2 {
   width: 120px;
   cursor: pointer;
   padding: 8px 15px;
-}
-
-.select-btn-container button:hover {
-  background-color: #45a049;
 }
 
 .hotel-grid {

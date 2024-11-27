@@ -55,11 +55,11 @@
     <button type="submit">Register</button>
   </form>
 </div>
-<LogoutButton />
+<HeaderComponent />
 </template>
 
 <script>
-import LogoutButton from '@/components/LogoutButton.vue';
+import HeaderComponent from './HeaderComponent.vue';
 export default {
     data() {
       return {
@@ -90,7 +90,7 @@ export default {
       };
     },
     components: {
-      LogoutButton
+      HeaderComponent
     },
     methods: {
       async submitForm(){
