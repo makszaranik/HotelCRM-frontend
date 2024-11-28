@@ -6,16 +6,58 @@
         <RouterLink to="/create">Register</RouterLink>
         <RouterLink to="/authorization">Authorization</RouterLink>
         <RouterLink to="/catalog">Catalog</RouterLink>
-        <RouterLink to="/entries">Entries</RouterLink>
+        <RouterLink v-if="isLoggedIn()" to="/entries">Entries</RouterLink>
+        <button v-if="isLoggedIn()" @click="logout">Logout</button>
         <RouterView></RouterView>
       </nav>
     </header>
   </div>
 </template>
 
+<script>
+export default{
+  methods: {
+    isLoggedIn() {
+      return sessionStorage.getItem("authToken") !== null;
+    },
+    logout() {
+      sessionStorage.removeItem("authToken");
+      this.$router.push("/authorization");
+    }
+  }
+}
+</script>
+
 <style scoped>
+
+.header button {
+  background-image: linear-gradient(to right, #e52d27 0%, #b31217 51%, #e52d27 100%);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 10px 20px;
+  font-size: 1rem;
+  height: 35px;
+  transition: background-position 0.5s, transform 0.3s;
+  background-size: 200% auto;
+  display: inline-block;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header button:hover {
+  background-position: right center;
+  transform: scale(1.05);
+  color: white;
+}
+
+.header button:focus {
+  outline: none;
+}
+
+
+
 body {
-  margin: 0;
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
   color: #333;
@@ -39,6 +81,10 @@ body {
 .header a {
   color: #fff;
   text-decoration: none;
+  margin-right: 50px;
+}
+
+header button {
   margin-right: 50px;
 }
 
@@ -97,7 +143,7 @@ body {
 }
 
 .form-container button {
-  background-color: #ff6600;
+  background-color: #ff0000;
   color: white;
   border: none;
   border-radius: 5px;
