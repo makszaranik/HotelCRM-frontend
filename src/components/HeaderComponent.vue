@@ -6,6 +6,7 @@
         <RouterLink to="/create">Register</RouterLink>
         <RouterLink to="/authorization">Authorization</RouterLink>
         <RouterLink to="/catalog">Catalog</RouterLink>
+        <RouterLink to="/entries">Entries</RouterLink>
         <RouterView></RouterView>
       </nav>
     </header>

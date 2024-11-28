@@ -3,9 +3,11 @@ import RegistrationPage from '@/components/RegistrationForm.vue';
 import AuthorizationForm from './components/AuthorizationForm.vue';
 import HotelCatalog from './components/HotelCatalog.vue';
 import RoomsCatalog from './components/RoomsCatalog.vue';
+import EntriesTable from './components/EntriesTable.vue';
 
 const routes = [
   { path: '/create', name: 'Register', component: RegistrationPage },
+  { path: '/entries', name: 'Entries', component: EntriesTable },
   { path: '/authorization', name: 'Authorization', component: AuthorizationForm},
   { path: '/catalog', name: "HotelCatalog", component: HotelCatalog},
   { path: '/catalog/rooms', name: "RoomsCatalog", component: RoomsCatalog}
