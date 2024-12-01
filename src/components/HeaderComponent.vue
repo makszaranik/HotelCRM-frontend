@@ -20,9 +20,17 @@ export default{
     isLoggedIn() {
       return sessionStorage.getItem("authToken") !== null;
     },
-    logout() {
-      sessionStorage.removeItem("authToken");
-      this.$router.push("/authorization");
+    async logout() {
+      const res = await fetch('http://localhost:8000/api/users/logout', {
+        method: "POST",
+        headers: {
+          'Authorization': `Bearer ${sessionStorage.getItem("authToken")}`
+        }
+      });
+      if(res.status === 200){
+        sessionStorage.removeItem("authToken");
+        this.$router.push("/authorization");
+      }
     }
   }
 }

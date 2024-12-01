@@ -85,7 +85,6 @@ export default {
       const formattedStartDate = `${startParts[1]}.${startParts[2]}.${startParts[0]}`;
       const endParts = this.endDate.split('-');
       const formattedEndDate = `${endParts[1]}.${endParts[2]}.${endParts[0]}`;
-      console.log(this.hotels)
       if(this.city == ''){
         this.allHotels()
         return
