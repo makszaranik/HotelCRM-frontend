@@ -17,7 +17,8 @@
           <h3>{{ hotel.name }}</h3>
           <p>{{ hotel.city }}</p>
           <p class="price">average price {{ averagePrice(hotel) }}$ per night</p>
-          <button @click="bookHotel(index)">Book Hotel</button>
+          <button v-if=isValidForm() @click="bookHotel(index)">Book Hotel</button>
+          <button v-if=!isValidForm()>Book Hotel</button>
         </div>
       </div>
     </div>
@@ -57,7 +58,7 @@ export default {
       return average.toFixed(1)
     },
     isValidForm(){
-      return (this.startDate !== "" && this.endDate !== "");
+      return (this.startDate !== "" && this.endDate !== "" && this.city !== "");
     },
     bookHotel(index) {
       this.selectedHotelId = this.hotels[index].id
