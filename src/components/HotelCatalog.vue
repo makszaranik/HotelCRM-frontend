@@ -33,8 +33,8 @@ export default {
   data() {
     return {
       city: '',
-      startDate: "2024-05-12",
-      endDate: "2024-07-12",
+      startDate: "2025-10-01",
+      endDate: "2025-11-01",
       hotels: [],
       selectedHotelId: null,
     };
@@ -54,7 +54,7 @@ export default {
         sum += element.price
       });
       average = (sum/(hotel.rooms.length))
-      return average
+      return average.toFixed(1)
     },
     isValidForm(){
       return (this.startDate !== "" && this.endDate !== "");

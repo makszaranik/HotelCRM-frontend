@@ -1,6 +1,6 @@
 <template>
   <div class="room-card" v-for="(room, index) in rooms" :key="index">
-    <img src="https://img.hotels24.ua/photos/partner_hotel/room/123/12354/1235499/Gostinica-Nesvit-nomer-Mesto-v-jenskom-8-mestnom-nomere-foto-1235499mx.jpg" 
+    <img :src=room.image
          alt="Room" class="room-image">
     <div class="room-info">
       <div class="room-header">
@@ -60,16 +60,12 @@ export default {
 
       this.startDate = formattedStartDate;
       this.endDate = formattedEndDate;
-
-      console.log(this.startDate)
-      console.log(this.endDate)
-      
     },
     calculateDuration(){
-      const [startDay, startMonth, startYear] = this.startDate.split('.');
-      const [endDay, endMonth, endYear] = this.endDate.split('.');
-      const startDate = new Date(`${startYear}-${startMonth}-${startDay}`);
-      const endDate = new Date(`${endYear}-${endMonth}-${endDay}`);
+      const [startMonth, startDay, startYear] = this.startDate.split('.');
+      const [endMonth, endDay, endYear] = this.endDate.split('.');
+      const startDate = new Date(`${startMonth}-${startDay}-${startYear}`);
+      const endDate = new Date(`${endMonth}-${endDay}-${endYear}`);
       const timeDiff = endDate - startDate;
       const days = Math.ceil(timeDiff / (1000 * 3600 * 24));
       this.duration = days > 0 ? days : 0;
