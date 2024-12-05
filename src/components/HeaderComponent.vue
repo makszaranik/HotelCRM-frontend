@@ -6,6 +6,7 @@
         <RouterLink to="/create">Register</RouterLink>
         <RouterLink to="/authorization">Authorization</RouterLink>
         <RouterLink to="/catalog">Catalog</RouterLink>
+        <RouterLink v-if="isAdmin()" to="/admin">Admin Page</RouterLink>
         <RouterLink v-if="isLoggedIn()" to="/entries">Entries</RouterLink>
         <button v-if="isLoggedIn()" @click="logout">Logout</button>
         <RouterView></RouterView>
@@ -19,6 +20,9 @@ export default{
   methods: {
     isLoggedIn() {
       return sessionStorage.getItem("authToken") !== null;
+    },
+    isAdmin(){
+      return sessionStorage.getItem('username') === 'Admin';
     },
     async logout() {
       const res = await fetch('http://localhost:8000/api/users/logout', {

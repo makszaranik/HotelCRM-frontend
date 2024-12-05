@@ -52,6 +52,7 @@ import HeaderComponent from './HeaderComponent.vue';
         if(res.status === 200){
           const data = await res.json()
           sessionStorage.setItem("authToken", data)
+          sessionStorage.setItem("username", this.form.username)
           this.$router.push("/catalog")
           return;
         }
