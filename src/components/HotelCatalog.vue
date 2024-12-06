@@ -18,7 +18,7 @@
           <p>{{ hotel.city }}</p>
           <p class="price">average price {{ averagePrice(hotel) }}$ per night</p>
           <button v-if=isValidForm() @click="bookHotel(index)">Book Hotel</button>
-          <button v-if=!isValidForm()>Book Hotel</button>
+          <button v-if=!isValidForm() @click="bookHotelNoFilter(index)">Book Hotel</button>
         </div>
       </div>
     </div>
@@ -68,6 +68,17 @@ export default {
         endDate: this.endDate
       }})
     },
+    bookHotelNoFilter(index) {
+      this.selectedHotelId = this.hotels[index].id
+      this.$router.push({
+        path: "/catalog/rooms",
+        query: {
+          selectedHotelId: this.selectedHotelId,
+          startDate: "",
+          endDate: ""
+        }
+      })
+    },
     async allHotels(){
       const res = await fetch('http://localhost:8000/api/hotels',{
         method: "GET",
@@ -86,6 +97,7 @@ export default {
       const formattedStartDate = `${startParts[1]}.${startParts[2]}.${startParts[0]}`;
       const endParts = this.endDate.split('-');
       const formattedEndDate = `${endParts[1]}.${endParts[2]}.${endParts[0]}`;
+
       if(this.city == ''){
         this.allHotels()
         return

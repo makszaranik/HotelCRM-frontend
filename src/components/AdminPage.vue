@@ -38,6 +38,9 @@
           <input v-model.number="newRoom.bedsCount" type="number" placeholder="Number of Beds" />
           <input v-model.number="newRoom.price" type="number" placeholder="Price per Night" />
           <input v-model="newRoom.image" type="text" placeholder="Room Image URL" />
+          <!-- Добавляем поля для дат так же, как на начальной странице -->
+          <input v-model="newRoom.startDate" type="date" placeholder="Start Date" />
+          <input v-model="newRoom.endDate" type="date" placeholder="End Date" />
           <button @click="addRoom">Create Room</button>
         </div>
         <table>
@@ -57,6 +60,7 @@
               <td>${{ room.price }}</td>
               <!-- Display the room image -->
               <td>
+                <img :src="room.image" alt="Room Image"/>
               </td>
               <td>
                 <button @click="deleteRoom(room.id)">Delete</button>
@@ -90,7 +94,7 @@ export default {
         type: "",
         bedsCount: 1,
         price: 0,
-        image: "12",
+        image: "",
         startDate: "2023-12-01",
         endDate: "2023-12-01",
         status: "available"
@@ -150,20 +154,19 @@ export default {
       this.isRoomManagementVisible = !this.isRoomManagementVisible;
     },
     async addRoom() {
-        const res = await fetch(`http://localhost:8000/api/hotels/${this.selectedHotel.id}/rooms/add`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(this.newRoom),
-        }
-      );
+      const res = await fetch(`http://localhost:8000/api/hotels/${this.selectedHotel.id}/rooms/add`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(this.newRoom),
+      });
       console.log(this.newRoom);
       if (res.ok) {
         const addedRoom = await res.json();
         this.selectedHotel.rooms.push(addedRoom);
-        this.newRoom = { type: "", bedsCount: 1, price: 0, image: "", status: "", startDate: "", endDate: ""};
+        this.newRoom = { type: "", bedsCount: 1, price: 0, image: "", status: "available", startDate: "2023-12-01", endDate: "2023-12-01"};
       } else {
         const errorData = await res.json();
         console.error('Error adding room:', errorData);

@@ -9,13 +9,8 @@
       <div class="room-details">
         <p><span>🛏️</span> {{ room.bedsCount }} beds</p>
         <p class="cancellation">ℹ️ Free cancellation</p>
-        <strong>{{ room.price * duration }}$ </strong>
-        <span>for {{ duration }} nights</span>
-        <div class="stars">
-          <span>★</span>
-          <span>★</span>
-          <span>★</span>
-        </div>
+        <strong>price {{ room.price * duration }}$ </strong>
+        <p>{{ room.startDate}} - {{room.endDate}}&nbsp;&nbsp;(for {{ duration }} nights)</p>
       </div>
       <button v-if="roomAvailable(room)" @click="bookRoom(room.id)" class="book-button">Book room</button>
       <p class="booked-room-text" v-if="room.status === 'booked'">Room already booked</p>
@@ -33,8 +28,8 @@ export default {
     return {
       duration: 0,
       selectedHotelId: null,
-      startDate: '',
-      endDate: '',
+      startDate: "",
+      endDate: "",
       rooms: [],
     }
   },
@@ -52,25 +47,37 @@ export default {
       this.selectedHotelId = this.$route.query.selectedHotelId;
       this.startDate = this.$route.query.startDate;
       this.endDate = this.$route.query.endDate;
-      
-      const startParts = this.startDate.split('-');
-      const formattedStartDate = `${startParts[1]}.${startParts[2]}.${startParts[0]}`;
-      const endParts = this.endDate.split('-');
-      const formattedEndDate = `${endParts[1]}.${endParts[2]}.${endParts[0]}`;
 
-      this.startDate = formattedStartDate;
-      this.endDate = formattedEndDate;
+      if(this.startDate !== "" && this.endDate !== ""){
+        const startParts = this.startDate.split('-');
+        const formattedStartDate = `${startParts[1]}.${startParts[2]}.${startParts[0]}`;
+        const endParts = this.endDate.split('-');
+        const formattedEndDate = `${endParts[1]}.${endParts[2]}.${endParts[0]}`;
+        this.startDate = formattedStartDate;
+        this.endDate = formattedEndDate;
+      }else{
+        this.startDate = ""
+        this.endDate = ""
+      }
+      console.log(this.startDate)
+      console.log(this.endDate)
     },
     calculateDuration(){
-      const [startMonth, startDay, startYear] = this.startDate.split('.');
-      const [endMonth, endDay, endYear] = this.endDate.split('.');
-      const startDate = new Date(`${startMonth}-${startDay}-${startYear}`);
-      const endDate = new Date(`${endMonth}-${endDay}-${endYear}`);
-      const timeDiff = endDate - startDate;
-      const days = Math.ceil(timeDiff / (1000 * 3600 * 24));
-      this.duration = days > 0 ? days : 0;
+      if(this.startDate !== "" && this.endDate !== ""){
+        const [startMonth, startDay, startYear] = this.startDate.split('.');
+        const [endMonth, endDay, endYear] = this.endDate.split('.');
+        const startDate = new Date(`${startMonth}-${startDay}-${startYear}`);
+        const endDate = new Date(`${endMonth}-${endDay}-${endYear}`);
+        const timeDiff = endDate - startDate;
+        const days = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        this.duration = days > 0 ? days : 0;
+      }else{
+        this.duration = 1;
+      }
     },
     async getRooms(){
+      console.log(this.startDate)
+      console.log(this.endDate)
       const res = await fetch(`http://localhost:8000/api/hotels/${this.selectedHotelId}/rooms`, {
         method: "POST",
         headers: {
@@ -126,10 +133,10 @@ export default {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   margin-bottom: 20px;
-  height: 300px;
+  height: 350px;
 }
 .room-card img{
-  margin-top: 30px;
+  margin-top: 80px;
   padding-left: 5px;
   width: 200px;
   height: 230px;
@@ -177,6 +184,7 @@ export default {
 }
 
 .book-button {
+  
   width: 30vh;
   margin-bottom: 25px;
   margin-right: 60px;
