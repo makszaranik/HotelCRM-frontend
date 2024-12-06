@@ -3,8 +3,8 @@
     <header class="header">
       <div class="logo">Skyscanner</div>
       <nav>
-        <RouterLink to="/create">Register</RouterLink>
-        <RouterLink to="/authorization">Authorization</RouterLink>
+        <RouterLink v-if="!isLoggedIn()" to="/create">Register</RouterLink>
+        <RouterLink v-if="!isLoggedIn()" to="/authorization">Authorization</RouterLink>
         <RouterLink to="/catalog">Catalog</RouterLink>
         <RouterLink v-if="isAdmin()" to="/admin">Admin Page</RouterLink>
         <RouterLink v-if="isLoggedIn()" to="/entries">Entries</RouterLink>
@@ -22,7 +22,7 @@ export default{
       return sessionStorage.getItem("authToken") !== null;
     },
     isAdmin(){
-      return sessionStorage.getItem('username') === 'Admin';
+      return sessionStorage.getItem("username") === 'Admin';
     },
     async logout() {
       const res = await fetch('http://localhost:8000/api/users/logout', {
